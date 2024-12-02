@@ -80,7 +80,7 @@ function traverseModel(object) {
 
 
 loader.load(
-  'public/scene.gltf', // Replace with the path to your GLTF/GLB model
+  './scene.gltf', // Replace with the path to your GLTF/GLB model
   function (gltf) {
     model = gltf.scene; // Replace with the actual name of the screen mesh
     scene.add(model);          // Add the model to the scene

@@ -87,7 +87,7 @@ let model2;
 //     );// Layer for object 2
 let spotLights;
 loaders.load(
-  'public/static/untitled.gltf', // Replace with the path to your GLTF/GLB model
+  '/static/untitled.gltf', // Replace with the path to your GLTF/GLB model
   function (gltf) {
     model2 = gltf.scene;
     model2.traverse((child) => {
