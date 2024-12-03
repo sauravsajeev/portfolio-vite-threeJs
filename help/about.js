@@ -180,9 +180,12 @@ const controlss = new OrbitControls(cameras, canvass )
   sizes.width = window.innerWidth;
   sizes.height = window.innerHeight;
   cameras.aspect = sizes.width/sizes.height;
- 
    cameras.updateProjectionMatrix();
   renderers.setSize(sizes.width,sizes.height) 
+  // if (sizes.width  <= 768){
+  //   cameras.position.set(60, 20,-40);
+  //   console.log("position set")
+  // }
  })
 
  cameras.lookAt(  
@@ -436,3 +439,13 @@ function onMouseMove1(event) {
             targetRotationY2 = mouseX * maxRotationY2;// Limit rotation to ±60 degrees
 }
 window.addEventListener('mousemove', onMouseMove1, false);
+
+// window.addEventListener("resize", ()=>{
+  
+//   sizes.width = window.innerWidth;
+//   sizes.height = window.innerHeight;
+//   cameras.aspect = sizes.width/sizes.height;
+ 
+//    cameras.updateProjectionMatrix();
+//   renderers.setSize(sizes.width,sizes.height) 
+//  })
