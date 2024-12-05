@@ -281,6 +281,10 @@ display: none;
   .robo{
    display: none;
   }
+  .room{
+    overflow: hidden;
+    max-width: 110%;
+  }
   .navigate a span{
     display: none;
   }

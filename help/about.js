@@ -174,6 +174,9 @@ const controlss = new OrbitControls(cameras, canvass )
  controlss.enableRotate = false;
  // controls.autoRotate = true
 // controls.autoRotateSpeed = 6
+if (sizes.width  <= 768){
+controlss.enableRotate = true;
+}
  //resize 
  window.addEventListener("resize", ()=>{
   
@@ -182,10 +185,11 @@ const controlss = new OrbitControls(cameras, canvass )
   cameras.aspect = sizes.width/sizes.height;
    cameras.updateProjectionMatrix();
   renderers.setSize(sizes.width,sizes.height) 
-  // if (sizes.width  <= 768){
-  //   cameras.position.set(60, 20,-40);
-  //   console.log("position set")
-  // }
+  if (sizes.width  <= 768){
+    cameras.position.set(60, 20,-40);
+    console.log("position set")
+    controlss.enableRotate = true;
+  }
  })
 
  cameras.lookAt(  
@@ -206,17 +210,21 @@ const controlss = new OrbitControls(cameras, canvass )
      1 // threshold
  );
  composer.addPass(bloomPass);
-
+var rotation =  cameras.rotation.z  -0.05;
  let movementcam = true;
 const loops = ()=>{
-   //controlss.update();
+  // controlss.update();
 
   
   if (model2 && movementcam) {
     // Smoothly interpolate the model's rotation towards the target rotation
     model2.rotation.y += (targetRotationY2 - model2.rotation.y) * rotationSpeed;
 }
- 
+if (sizes.width  <= 768){
+  cameras.position.set(80, 50,-45);
+  cameras.rotation.z = rotation;
+  // console.log("position set")
+}
 //renderers.render(scenes,cameras)
 
 composer.render();;
@@ -252,6 +260,7 @@ function onClick2(event) {
 gsap.registerPlugin();
 const t1 = gsap.timeline();
 function updateCamera(){
+  controlss.enableRotate = false;
   movementcam =false;
   model2.rotation.y = 0;
   cameras.position.set(15, 15,-11);
@@ -365,6 +374,7 @@ function normalpos(){
 }
 
 function updateskillcam(){
+  controlss.enableRotate = false;
   movementcam =false;
   model2.rotation.y = 0;
   cameras.position.set(15, 15,-11);
@@ -384,6 +394,7 @@ function updateskillcam(){
 lastpos =[-5.5,7.5,1,-5.0699995040893555,  7.079998970031738,  20.9600];
 }
 function updateprojectcam(){
+  controlss.enableRotate = false;
   movementcam =false;
   model2.rotation.y = 0;
   cameras.position.set(15, 15,-11);
@@ -404,6 +415,7 @@ lastpos =[-6,4,-4.9,-10.121976852416992, 4.01351928710938, -4.8956985473633];
 }
 
 function updatecontactcam(){
+  controlss.enableRotate = false;
   movementcam =false;
   model2.rotation.y = 0;
   cameras.position.set(15, 15,-11);
