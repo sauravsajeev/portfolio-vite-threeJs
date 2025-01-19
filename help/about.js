@@ -14,9 +14,6 @@ const sizes = {
     width:window.innerWidth,
     height:window.innerHeight,
   }
-  let uniforms = {
-    globalBloom: {value: 1}
-  }
 function traverseModel(object) {
     object.traverse(function(child) {
         if (child.isMesh) {
@@ -174,9 +171,7 @@ const controlss = new OrbitControls(cameras, canvass )
  controlss.enableRotate = false;
  // controls.autoRotate = true
 // controls.autoRotateSpeed = 6
-if (sizes.width  <= 768){
-controlss.enableRotate = true;
-}
+
  //resize 
  window.addEventListener("resize", ()=>{
   
@@ -186,18 +181,74 @@ controlss.enableRotate = true;
    cameras.updateProjectionMatrix();
   renderers.setSize(sizes.width,sizes.height) 
   if (sizes.width  <= 768){
-    cameras.position.set(60, 20,-40);
+    cameras.position.set(50, 20,-40);
     console.log("position set")
-    controlss.enableRotate = true;
   }
  })
 
  cameras.lookAt(  
   2
-,
-7.884449005126953
-,
--4.130945205688477);
+,7.884449005126953,-4.130945205688477);
+var rotation =  cameras.rotation.z  -0.05;
+if (sizes.width  <= 768){
+  cameras.position.set(90, 50,-45);
+  cameras.rotation.z = rotation;
+}
+
+let currentSectionIndex = 0;
+const sections = document.querySelectorAll('.section');
+
+let isScrolling = false;
+
+// Scroll to a specific section
+function scrollToSection(index) {
+  if (index < 0 || index >= sections.length || isScrolling) return;
+
+  isScrolling = true;
+  sections[index].scrollIntoView({ behavior: 'smooth' });
+
+  // Prevent rapid consecutive scrolling
+  setTimeout(() => {
+    currentSectionIndex = index;
+    isScrolling = false;
+  }, 1000); // Adjust delay to match scrolling duration
+}
+
+// Handle scroll events
+function handleScroll(event) {
+  if (isScrolling) return;
+
+  const deltaY = event.deltaY || event.changedTouches[0].clientY - event.changedTouches[1]?.clientY || 0;
+
+  if (deltaY > 0) {
+    // Scroll down
+    scrollToSection(currentSectionIndex + 1);
+  } else if (deltaY < 0) {
+    // Scroll up
+    scrollToSection(currentSectionIndex - 1);
+  }
+}
+
+// Event listeners
+window.addEventListener('wheel', handleScroll); // Desktop scrolling
+let touchStartY = 0;
+
+window.addEventListener('touchstart', (event) => {
+  touchStartY = event.touches[0].clientY;
+});
+
+window.addEventListener('touchend', (event) => {
+  const touchEndY = event.changedTouches[0].clientY;
+  const deltaY = touchStartY - touchEndY;
+
+  if (deltaY > 50) {
+    // Scroll down
+    scrollToSection(currentSectionIndex + 1);
+  } else if (deltaY < -50) {
+    // Scroll up
+    scrollToSection(currentSectionIndex - 1);
+  }
+});
  const composer = new EffectComposer(renderers);
  const renderPass = new RenderPass(scenes, cameras);
  composer.addPass(renderPass);
@@ -210,7 +261,7 @@ controlss.enableRotate = true;
      1 // threshold
  );
  composer.addPass(bloomPass);
-var rotation =  cameras.rotation.z  -0.05;
+
  let movementcam = true;
 const loops = ()=>{
   // controlss.update();
@@ -220,12 +271,8 @@ const loops = ()=>{
     // Smoothly interpolate the model's rotation towards the target rotation
     model2.rotation.y += (targetRotationY2 - model2.rotation.y) * rotationSpeed;
 }
-if (sizes.width  <= 768){
-  cameras.position.set(80, 50,-45);
-  cameras.rotation.z = rotation;
-  // console.log("position set")
-}
-//renderers.render(scenes,cameras)
+
+
 
 composer.render();;
  window.requestAnimationFrame(loops);
@@ -234,8 +281,16 @@ loops()
 let maxRotationY2 = Math.PI / 12;
 document.addEventListener('click',onClick2);
 let page = "home";
+
 let mainpos = [15, 15,-11,2 ,7.884449005126953, -4.130945205688477];
 let lastpos = [15, 15,-11,2 ,7.884449005126953, -4.130945205688477];
+function mobileset(){
+  if  (sizes.width  <= 768){
+     mainpos = [80, 50,-45,2 ,7.884449005126953, -4.130945205688477];
+     lastpos = [80, 50,-45,2 ,7.884449005126953, -4.130945205688477];
+  }
+  
+}
 function onClick2(event) {
   if (document.querySelector('.right').contains(event.target)){
 		// wheel = getFirstObjectWithName(event, window, cameras, scenes, "Object_5");
@@ -254,17 +309,19 @@ function onClick2(event) {
    else if (page == 'contact'){
     updatecontactcam();
    }
-      // : null;
 }
 }
 gsap.registerPlugin();
 const t1 = gsap.timeline();
 function updateCamera(){
-  controlss.enableRotate = false;
   movementcam =false;
   model2.rotation.y = 0;
   cameras.position.set(15, 15,-11);
   cameras.lookAt(2 ,7.884449005126953, -4.130945205688477);
+  if (sizes.width  <= 768){
+    cameras.position.set(80, 50,-45);
+    cameras.rotation.z = rotation;
+  }
    t1.to(cameras.position,{
     x:-3.4,
     y:7.4,
@@ -272,7 +329,7 @@ function updateCamera(){
     duration:1.5,
 ease:"power3.inOut",
     onUpdate:function(){
-        cameras.lookAt(new THREE.Vector3(-10.121976852416992, 7.701351928710938, -5.95456985473633))
+        cameras.lookAt(new THREE.Vector3(-10.121976852416992, 7.701351928710938, -5.95456985473633));
     },
 
      onComplete:normalpos,
@@ -298,9 +355,6 @@ function reset(pages){
       spotLights.shadow.bias = -0.0001;
       scenes.add(spotLights);
       spotLights.target = child;
-      
-      // const helpers = new THREE.SpotLightHelper(spotLights);
-      // scenes.add(helpers);
     }
     }
   })
@@ -344,6 +398,10 @@ function reset(pages){
     console.log("not inside lastpos");
   cameras.position.set(15, 15,-11);
   cameras.lookAt(2 ,7.884449005126953, -4.130945205688477);
+  if (sizes.width  <= 768){
+    cameras.position.set(80, 50,-45);
+    cameras.rotation.z = rotation;
+  }
   }
 }
 window.reset = reset;
@@ -374,11 +432,15 @@ function normalpos(){
 }
 
 function updateskillcam(){
-  controlss.enableRotate = false;
+ 
   movementcam =false;
   model2.rotation.y = 0;
   cameras.position.set(15, 15,-11);
   cameras.lookAt(2 ,7.884449005126953, -4.130945205688477);
+  if (sizes.width  <= 768){
+    cameras.position.set(80, 50,-45);
+    cameras.rotation.z = rotation;
+  }
   t1.to(cameras.position,{
     x:-5.5,
     y:7.5,
@@ -394,11 +456,15 @@ function updateskillcam(){
 lastpos =[-5.5,7.5,1,-5.0699995040893555,  7.079998970031738,  20.9600];
 }
 function updateprojectcam(){
-  controlss.enableRotate = false;
+ 
   movementcam =false;
   model2.rotation.y = 0;
   cameras.position.set(15, 15,-11);
   cameras.lookAt(2 ,7.884449005126953, -4.130945205688477);
+  if (sizes.width  <= 768){
+    cameras.position.set(80, 50,-45);
+    cameras.rotation.z = rotation;
+  }
   t1.to(cameras.position,{
     x:-6,
     y:4,
@@ -415,11 +481,14 @@ lastpos =[-6,4,-4.9,-10.121976852416992, 4.01351928710938, -4.8956985473633];
 }
 
 function updatecontactcam(){
-  controlss.enableRotate = false;
   movementcam =false;
   model2.rotation.y = 0;
   cameras.position.set(15, 15,-11);
   cameras.lookAt(2 ,7.884449005126953, -4.130945205688477);
+  if (sizes.width  <= 768){
+    cameras.position.set(80, 50,-45);
+    cameras.rotation.z = rotation;
+  }
   t1.to(cameras.position,{
     x:-6.5,
     y:5,

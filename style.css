@@ -5,6 +5,7 @@
   padding: 0;
   box-sizing: border-box;
   text-decoration: none;
+  
 }
 html::-webkit-scrollbar {
   display: none; /* For Chrome, Safari, and Edge */
@@ -16,6 +17,8 @@ body,html{
   background-size: 600% 600%;
   animation: GradientBackground 20s ease infinite;
   -webkit-animation: GradientBackground 20s ease infinite;
+  height: 100%; 
+  overflow: hidden;
 }
 @keyframes appear {
   from {
@@ -260,47 +263,22 @@ display: none;
 }
 /* Style for About Me section */
 @media (max-width: 768px) {
-  .navbar{
-    width:15%;
-    border-width: 2px;
-    box-shadow: 0 0 0px 0px #070707;
-    z-index: 1100;
+  body{
+    overflow:scroll;
   }
-
-  .navbar .logo{
+  .whole{
+    background-color: #000;
+  }
+  .navbar{
     display: none;
   }
-  .navbar:hover{
-    box-shadow: 0 0 0px 0px #070707;
 
-  }
   .right{
-    width:85%;
-    margin-left: 13vw;
+    width:100vw;
+    margin-left: 0;
   }
   .robo{
-   display: none;
-  }
-  .room{
-    overflow: hidden;
-    max-width: 110%;
-  }
-  .navigate a span{
-    display: none;
-  }
-  .navigate{
-    height:80%;
-  }
-  .navigate a{
-    margin-top: 100px;
-  }
-  .navigate a i{
-    opacity: 1;
-    display: block;
-    font-size: 25px;
-  }
-  .socials p::after{
-content: "2024";
+    display:none;
   }
   .home .title{
     width:100%;
