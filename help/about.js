@@ -183,6 +183,10 @@ const controlss = new OrbitControls(cameras, canvass )
   if (sizes.width  <= 768){
     cameras.position.set(50, 20,-40);
     console.log("position set")
+    controlss.enableDamping = true;
+ controlss.enablePan = true;
+ controlss.enableZoom = true;
+ controlss.enableRotate = true;
   }
  })
 
@@ -191,6 +195,10 @@ const controlss = new OrbitControls(cameras, canvass )
 ,7.884449005126953,-4.130945205688477);
 var rotation =  cameras.rotation.z  -0.05;
 if (sizes.width  <= 768){
+  controlss.enableDamping = true;
+ controlss.enablePan = true;
+ controlss.enableZoom = true;
+ controlss.enableRotate = true;
   cameras.position.set(90, 50,-45);
   cameras.rotation.z = rotation;
 }

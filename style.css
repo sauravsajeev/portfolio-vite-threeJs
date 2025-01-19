@@ -261,6 +261,9 @@ display: none;
   width:100vw;
 
 }
+.goback{
+  display: none;
+}
 /* Style for About Me section */
 @media (max-width: 768px) {
   body{
@@ -324,12 +327,39 @@ display: none;
     font-size: 50px;
     letter-spacing: 1px;
   }
+  .about{
+    height:100vh;
+  }
   .room{
     overflow: hidden;
+    height:90vh;
   }
-  .rooms{
-    overflow:hidden;
+  .goback{
+    display: flex;
+    justify-content: center;
+    width:100vw;
+    background-color: #000;
+    height:10vh;
+    text-align: center;
+    flex-direction: column;
   }
+  .goback h2{
+    color:#ffffff;
+    padding: 3px;
+    font-size:17px;
+    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+  }
+  .gobutton i{
+    color:white;
+  }
+  .gobutton i:hover{
+    transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -o-transform: scale(1.1);
+  }
+}
 @keyframes GradientBackground {
   0% {
     background-position: 0% 50%;
@@ -342,5 +372,4 @@ display: none;
   100% {
     background-position: 0% 50%;
   }
-};
 }
