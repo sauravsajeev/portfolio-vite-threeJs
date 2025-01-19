@@ -132,7 +132,10 @@ loaders.load(
     // Optional: Scale and position the model if needed
     model2.scale.set(0.5,0.5,0.5);
   // Adjust scaling based on model size
-    model2.position.set(0, 0, 0); // Position the model in the scene
+    model2.position.set(0, 0, 0);
+    if (sizes.width  <= 768){ 
+      model2.position.set(0, 14, 0);
+    }// Position the model in the scene
     model2.rotation.set(0, 0, 0.1);
   },
   function (xhr) {
@@ -187,6 +190,7 @@ const controlss = new OrbitControls(cameras, canvass )
  controlss.enablePan = true;
  controlss.enableZoom = true;
  controlss.enableRotate = true;
+ model2.position.set(0, 14, 0);
   }
  })
 
@@ -202,6 +206,7 @@ if (sizes.width  <= 768){
   cameras.position.set(90, 50,-45);
   cameras.rotation.z = rotation;
 }
+
 
 let currentSectionIndex = 0;
 const sections = document.querySelectorAll('.section');
