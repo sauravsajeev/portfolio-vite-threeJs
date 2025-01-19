@@ -274,8 +274,9 @@ window.addEventListener('touchend', (event) => {
      1 // threshold
  );
  composer.addPass(bloomPass);
-
+ let renderout = true;
  let movementcam = true;
+ let page = "home";
 const loops = ()=>{
   // controlss.update();
 
@@ -284,16 +285,16 @@ const loops = ()=>{
     // Smoothly interpolate the model's rotation towards the target rotation
     model2.rotation.y += (targetRotationY2 - model2.rotation.y) * rotationSpeed;
 }
-
-
-
-composer.render();;
- window.requestAnimationFrame(loops);
+if (renderout){
+   composer.render();
+   window.requestAnimationFrame(loops);
+}
 }
 loops()
 let maxRotationY2 = Math.PI / 12;
 document.addEventListener('click',onClick2);
-let page = "home";
+
+
 
 let mainpos = [15, 15,-11,2 ,7.884449005126953, -4.130945205688477];
 let lastpos = [15, 15,-11,2 ,7.884449005126953, -4.130945205688477];
@@ -306,21 +307,29 @@ function mobileset(){
 }
 function onClick2(event) {
   if (document.querySelector('.right').contains(event.target)){
+    renderout = true;
 		// wheel = getFirstObjectWithName(event, window, cameras, scenes, "Object_5");
    if (page == 'about'){
 		// (wheel != null) ?
+    renderout = true;
      updateCamera();
+     
    }
    else if (page == 'skills'){
-
+    renderout = true;
     updateskillcam();
+   
    }
    else if (page == 'project'){
     console.log("inside project");
+    renderout = true;
     updateprojectcam();
+   
    }
    else if (page == 'contact'){
+    renderout = true;
     updatecontactcam();
+  
    }
 }
 }
@@ -350,6 +359,10 @@ ease:"power3.inOut",
   });
   lastpos= [-3.4, 7.4,-6.1,-10.121976852416992, 7.701351928710938, -5.95456985473633];
 }
+window.resetproject = function(){
+  renderout = true;
+  loops();
+};
 function reset(pages){
   page = pages;
   movementcam =true;
@@ -432,6 +445,7 @@ function normalpos(){
   }  else if (page =="project") {
     cameras.position.set(-6, 4,-4.9);
     cameras.lookAt(new THREE.Vector3(-10.121976852416992, 4.01351928710938, -4.8956985473633));
+    renderout = false;
     window.location.href = "#project";
   
   lastpos= [-3.4, 7.4,-6.1,-10.121976852416992, 7.701351928710938, -5.95456985473633];
