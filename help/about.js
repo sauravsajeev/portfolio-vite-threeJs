@@ -199,8 +199,8 @@ const controlss = new OrbitControls(cameras, canvass )
 ,7.884449005126953,-4.130945205688477);
 var rotation =  cameras.rotation.z  -0.05;
 if (sizes.width  <= 768){
-  controlss.enableDamping = true;
- controlss.enablePan = true;
+  controlss.enableDamping = false;
+ controlss.enablePan = false;
  controlss.enableZoom = true;
  controlss.enableRotate = true;
   cameras.position.set(90, 50,-45);
