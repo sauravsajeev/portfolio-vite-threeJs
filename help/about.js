@@ -174,7 +174,6 @@ const controlss = new OrbitControls(cameras, canvass )
  controlss.enableRotate = false;
  // controls.autoRotate = true
 // controls.autoRotateSpeed = 6
-
  //resize 
  window.addEventListener("resize", ()=>{
   
@@ -186,9 +185,9 @@ const controlss = new OrbitControls(cameras, canvass )
   if (sizes.width  <= 768){
     cameras.position.set(50, 20,-40);
     console.log("position set")
-    controlss.enableDamping = true;
- controlss.enablePan = true;
- controlss.enableZoom = true;
+    controlss.enableDamping = false;
+ controlss.enablePan =false;
+ controlss.enableZoom = false;
  controlss.enableRotate = true;
  model2.position.set(0, 14, 0);
   }
@@ -201,7 +200,7 @@ var rotation =  cameras.rotation.z  -0.05;
 if (sizes.width  <= 768){
   controlss.enableDamping = false;
  controlss.enablePan = false;
- controlss.enableZoom = true;
+ controlss.enableZoom = false;
  controlss.enableRotate = true;
   cameras.position.set(90, 50,-45);
   cameras.rotation.z = rotation;
@@ -236,6 +235,7 @@ function handleScroll(event) {
   if (deltaY > 0) {
     // Scroll down
     scrollToSection(currentSectionIndex + 1);
+    page= "skills"
   } else if (deltaY < 0) {
     // Scroll up
     scrollToSection(currentSectionIndex - 1);
@@ -278,7 +278,7 @@ window.addEventListener('touchend', (event) => {
  let movementcam = true;
  let page = "home";
 const loops = ()=>{
-  // controlss.update();
+   controlss.update();
 
   
   if (model2 && movementcam) {
