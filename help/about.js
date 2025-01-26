@@ -235,7 +235,7 @@ function handleScroll(event) {
   if (deltaY > 0) {
     // Scroll down
     scrollToSection(currentSectionIndex + 1);
-    page= "skills"
+   
   } else if (deltaY < 0) {
     // Scroll up
     scrollToSection(currentSectionIndex - 1);
